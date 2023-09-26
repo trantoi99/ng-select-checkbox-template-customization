@@ -1,0 +1,36 @@
+<form [formGroup]="heroForm">
+	<div class="form-group">
+		<label for="state">City</label>
+		<ng-select *ngIf="isCitiesControlVisible && cities" [items]="cities" [clearSearchOnAdd]="true"
+			[closeOnSelect]="false" labelForId="state" [multiple]="true" placeholder="Select cities"
+			clearAllText="Clear" formControlName="selectedCitiesIds" [bindLabel]="'text'">
+			<ng-template ng-header-tmp>
+				<button (click)="selectAll()" class="btn btn-sm btn-secondary">Select all</button>
+				<button (click)="unselectAll()" class="btn btn-sm btn-secondary">Unselect all</button>
+			</ng-template>
+			<!-- <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+				<input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"/>
+        {{item.gender | uppercase}}
+    </ng-template> -->
+			<ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+				<div class="row">
+					<input id="item-{{index}}" type="checkbox" [ngModel]="item$.selected"    [ngModelOptions]="{standalone: true}"/>
+        {{item['text']}}
+      </div>
+			</ng-template>
+			<ng-template ng-multi-label-tmp let-items="items">
+				<div class="ng-value" *ngFor="let item of items | slice:0:2">
+					{{item['text']}}
+				</div>
+				<div class="ng-value" *ngIf="items.length > 2">
+					<span class="ng-value-label">{{items.length - 2}} more...</span>
+				</div>
+			</ng-template>
+		</ng-select>
+		<br>
+		<button (click)="toggleCitiesControl()" class="btn btn-sm btn-secondary">Show/Hide</button>
+		<button (click)="clearCities()" class="btn btn-sm btn-secondary">Clear</button>
+	</div>
+</form>
+
+{{heroForm.value | json}}
